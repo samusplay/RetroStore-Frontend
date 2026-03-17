@@ -1,4 +1,8 @@
-export default function Home() {
+import BrandCarrusel from "./components/BrandCarrusel";
+import { verifcationTest } from "./config/cloudinary";
+
+export default async function Home() {
+  await verifcationTest();
   return (
     <div className="flex flex-col w-full bg-white">
       <section className="pt-24 pb-16 md:pt-32 md:pb-24 text-center px-6">
@@ -17,13 +21,17 @@ export default function Home() {
           </button>
         </div>
       </section>
-      {/* componente de use state */}
-      <section className="w-full">
-        {/* inyectar BranCarrusel */}
-        <div className="py-12 bg-zinc-50 border-y border-zinc-100 text-center text-zinc-400 text-sm font-bold tracking-widest border-dashed">
-          Carrusel de Marcas
+
+      {/* COMPONENTE DE USE STATE (CARRUSEL DE MARCAS) */}
+      <section className="w-full py-16 border-t border-zinc-100 bg-white">
+        <div className="container mx-auto px-6">
+          <h3 className="text-center text-sm font-bold tracking-widest text-zinc-400 uppercase mb-10">
+            Tus marcas están aquí
+          </h3>
+          <BrandCarrusel />
         </div>
       </section>
+
       {/* galeria con eventos */}
       <section className="py-24 container mx-auto px-6 border-b border-zinc-100">
         <div className="text-center mb-16">
@@ -39,6 +47,7 @@ export default function Home() {
           Galeria interactiva
         </div>
       </section>
+      
       {/* Catalogo lista */}
       <section className="py-24 container mx-auto px-6 bg-white">
         <div className="flex justify-between items-end mb-12 border-b border-zinc-100 pb-6">
@@ -58,6 +67,7 @@ export default function Home() {
           [ AQUÍ VA EL GRID DE PRODUCTOS DEL DEV 2 ]
         </div>
       </section>
+      
       {/* Capturar leads */}
       <section className="py-24 bg-zinc-900 text-white">
         <div className="container mx-auto px-6 max-w-4xl text-center">
