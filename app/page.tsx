@@ -1,4 +1,5 @@
 import BrandCarrusel from "./components/BrandCarrusel";
+import Gallery from "./components/Gallery";
 import { verifcationTest } from "./config/cloudinary";
 
 export default async function Home() {
@@ -34,6 +35,8 @@ export default async function Home() {
 
       {/* galeria con eventos */}
       <section className="py-24 container mx-auto px-6 border-b border-zinc-100">
+        
+        {/* Solo los textos van aquí adentro */}
         <div className="text-center mb-16">
           <h2 className="text-3xl font-black text-zinc-900 tracking-tight">
             La Joya de la Corona
@@ -42,10 +45,12 @@ export default async function Home() {
             Interactúa con nuestra pieza más exclusiva de la semana.
           </p>
         </div>
-        {/* featuredGallery */}
-        <div className="h-96 bg-zinc-50 rounded-3xl flex items-center justify-center text-zinc-400 border-2 border-dashed border-zinc-200">
-          Galeria interactiva
+        
+        {/* Aquí va la galería, en su propio contenedor ancho */}
+        <div className="max-w-5xl mx-auto">
+          <Gallery />
         </div>
+
       </section>
       
       {/* Catalogo lista */}
