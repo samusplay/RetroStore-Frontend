@@ -6,6 +6,8 @@ export default async function Home() {
   await verifcationTest();
   return (
     <div className="flex flex-col w-full bg-white">
+      
+      {/* 1. HERO SECTION (Intacta) */}
       <section className="pt-24 pb-16 md:pt-32 md:pb-24 text-center px-6">
         <h1 className="text-5xl md:text-7xl font-black text-zinc-900 tracking-tighter mb-6">
           La nostalgia,
@@ -23,37 +25,46 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* COMPONENTE DE USE STATE (CARRUSEL DE MARCAS) */}
-      <section className="w-full py-16 border-t border-zinc-100 bg-white">
+      {/* 2. CARRUSEL DE MARCAS (Diseño Mejorado) */}
+      <section className="w-full py-12 border-y border-zinc-100 bg-white">
         <div className="container mx-auto px-6">
-          <h3 className="text-center text-sm font-bold tracking-widest text-zinc-400 uppercase mb-10">
-            Tus marcas están aquí
+          <h3 className="text-center text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase mb-8">
+            Marcas clásicas restauradas
           </h3>
-          <BrandCarrusel />
+          {/* El carrusel ahora respira mejor con márgenes ajustados */}
+          <div className="opacity-80 hover:opacity-100 transition-opacity duration-300">
+            <BrandCarrusel />
+          </div>
         </div>
       </section>
 
-      {/* galeria con eventos */}
-      <section className="py-24 container mx-auto px-6 border-b border-zinc-100">
-        
-        {/* Solo los textos van aquí adentro */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-black text-zinc-900 tracking-tight">
-            La Joya de la Corona
-          </h2>
-          <p className="text-zinc-500 mt-2">
-            Interactúa con nuestra pieza más exclusiva de la semana.
-          </p>
-        </div>
-        
-        {/* Aquí va la galería, en su propio contenedor ancho */}
-        <div className="max-w-5xl mx-auto">
-          <Gallery />
-        </div>
+      {/* 3. GALERÍA CON EVENTOS (Diseño Mejorado y Expandido) */}
+      {/* Añadimos bg-zinc-50 para que la tarjeta blanca del componente resalte */}
+      <section className="py-24 w-full bg-zinc-50 border-b border-zinc-100">
+        <div className="container mx-auto px-6">
+          
+          {/* Textos con mejor jerarquía y estilo premium */}
+         <div className="text-center mb-14">
+            <span className="text-orange-500 font-bold tracking-wider text-sm uppercase mb-3 block">
+              Colección Premium
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tight">
+              Tesoros de la Semana
+            </h2>
+            <p className="text-zinc-500 mt-4 text-lg max-w-2xl mx-auto">
+              Explora nuestra selección de piezas más cotizadas. Haz clic en cada miniatura para descubrir los detalles de estas reliquias antes de que desaparezcan.
+            </p>
+          </div>
+          
+          {/* Contenedor ancho (max-w-6xl) para asegurar que el componente se acomode horizontalmente */}
+          <div className="max-w-6xl mx-auto">
+            <Gallery />
+          </div>
 
+        </div>
       </section>
       
-      {/* Catalogo lista */}
+      {/* 4. CATÁLOGO LISTA (Intacta) */}
       <section className="py-24 container mx-auto px-6 bg-white">
         <div className="flex justify-between items-end mb-12 border-b border-zinc-100 pb-6">
           <div>
@@ -73,7 +84,7 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* Capturar leads */}
+      {/* 5. CAPTURAR LEADS (Intacta) */}
       <section className="py-24 bg-zinc-900 text-white">
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-6">
@@ -90,6 +101,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      
     </div>
   );
 }
