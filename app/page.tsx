@@ -1,5 +1,6 @@
 import BrandCarrusel from "./components/BrandCarrusel";
 import Gallery from "./components/Gallery";
+import VinlyShowCase from "./components/VinlyShowCase";
 import VintageForm from "./components/VintageForm";
 import { verifcationTest } from "./config/cloudinary";
 
@@ -67,21 +68,26 @@ export default async function Home() {
       
       {/* 4. CATÁLOGO LISTA (Intacta) */}
       <section className="py-24 container mx-auto px-6 bg-white">
-        <div className="flex justify-between items-end mb-12 border-b border-zinc-100 pb-6">
+        <div className="flex justify-between items-end mb-16 border-b border-zinc-100 pb-6">
           <div>
             <h2 className="text-3xl font-black text-zinc-900 tracking-tight">
-              Recién Llegados
+              Tu música favorita en vinilo
             </h2>
-            <p className="text-zinc-500 mt-2">
-              Tesoros rescatados esta semana.
+            <p className="text-zinc-500 mt-2 text-lg">
+              Haz clic en la portada, sube el volumen y revive los clásicos.
             </p>
           </div>
           <button className="hidden md:block text-orange-500 font-bold hover:text-zinc-900 transition-colors">
             Ver todo →
           </button>
         </div>
-        <div className="h-64 bg-zinc-50 rounded-3xl flex items-center justify-center text-zinc-400 border-2 border-dashed border-zinc-200">
-          [ AQUÍ VA EL GRID DE PRODUCTOS DEL DEV 2 ]
+        
+        {/* ¡ADIÓS A LA CAJA GRIS! 
+          Quitamos el border-dashed y el h-64 para que el VinlyShowCase 
+          tenga todo el espacio vertical que necesita para sus animaciones.
+        */}
+        <div className="w-full">
+          <VinlyShowCase />
         </div>
       </section>
       
