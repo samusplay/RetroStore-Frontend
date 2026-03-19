@@ -1,5 +1,6 @@
 import BrandCarrusel from "./components/BrandCarrusel";
 import Gallery from "./components/Gallery";
+import VintageForm from "./components/VintageForm";
 import { verifcationTest } from "./config/cloudinary";
 
 export default async function Home() {
@@ -84,24 +85,18 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* 5. CAPTURAR LEADS (Intacta) */}
-      <section className="py-24 bg-zinc-900 text-white">
-        <div className="container mx-auto px-6 max-w-4xl text-center">
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-6">
-            Únete al Club Retro.
-          </h2>
-          <p className="text-zinc-400 text-lg mb-12 max-w-xl mx-auto">
-            Las mejores reliquias se venden en minutos. Déjanos tu correo y te
-            avisaremos antes de publicarlas en la tienda.
-          </p>
-
-          {/* INYECTAR AQUÍ: <Form /> */}
-          <div className="h-48 bg-zinc-800 rounded-3xl flex items-center justify-center text-zinc-500 border-2 border-dashed border-zinc-700">
-            [ AQUÍ VA EL FORMULARIO DE REGISTRO DEL DEV 4 ]
+     
+      {/* Capturar leads */}
+      <section className="py-32 w-full bg-[#FCFAF5] border-t border-[#C4A882]/20">
+        <div className="container mx-auto px-6 flex justify-center items-center">
+          
+          
+          <div className="w-full flex justify-center items-center transform scale-105 md:scale-110">
+            <VintageForm />
           </div>
+          
         </div>
       </section>
-      
     </div>
   );
 }
