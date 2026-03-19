@@ -1,3 +1,5 @@
+import VintageForm from "./components/VintageForm";
+
 export default function Home() {
   return (
     <div className="flex flex-col w-full bg-white">
@@ -71,7 +73,7 @@ export default function Home() {
 
           {/* INYECTAR AQUÍ: <Form /> */}
           <div className="h-48 bg-zinc-800 rounded-3xl flex items-center justify-center text-zinc-500 border-2 border-dashed border-zinc-700">
-            [ AQUÍ VA EL FORMULARIO DE REGISTRO DEL DEV 4 ]
+            <VintageForm />
           </div>
         </div>
       </section>
