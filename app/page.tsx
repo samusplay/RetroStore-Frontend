@@ -1,3 +1,4 @@
+`use client`;
 import VintageForm from "./components/VintageForm";
 
 export default function Home() {
