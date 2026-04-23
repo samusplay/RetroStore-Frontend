@@ -79,7 +79,6 @@ export default function Gallery() {
                     ))}
                 </div>
             </div> {/* <-- ¡ESTE ES EL DIV QUE FALTABA! Cierra la columna izquierda */}
-
             {/* --- COLUMNA DERECHA: TEXTOS Y BOTÓN --- */}
             <div className="w-full md:w-1/2 flex flex-col items-start text-left">
                 <div className="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-widest text-orange-600 uppercase bg-orange-100 rounded-full">
