@@ -21,13 +21,13 @@ export default async function Home() {
              }}>
         </div>
         {/* Resplandor central */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-fuchsia-600/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-100 bg-fuchsia-600/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
         <div className="relative z-10">
             <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter mb-6 drop-shadow-lg">
             La nostalgia,
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-purple-600 drop-shadow-[0_0_15px_rgba(217,70,239,0.4)]">ahora de colección.</span>
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-fuchsia-500 to-purple-600 drop-shadow-[0_0_15px_rgba(217,70,239,0.4)]">ahora de colección.</span>
             </h1>
             <p className="text-lg md:text-xl text-cyan-100/70 max-w-2xl mx-auto font-medium mb-12 leading-relaxed">
             Consolas clásicas, vinilos originales y moda Y2K. Restaurados con

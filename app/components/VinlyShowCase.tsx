@@ -1,8 +1,8 @@
+// app/retro-tv/components/VinlyShowCase.tsx
 'use client';
 
 import { useRef, useState } from "react";
 
-//arreglo
 const vinilosData = [
     {
         id: 1,
@@ -31,36 +31,29 @@ const vinilosData = [
 ];
 
 export default function VinlyShowCase() {
-    //estado
     const [playingId, setPlayingId] = useState<number | null>(null);
-
-    //controles
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    //logica reproduccion
     const togglePlay = (vinilo: typeof vinilosData[0]) => {
-        //si el audio no cargado no ejecutamos
         if (!audioRef.current) return;
 
         if (playingId === vinilo.id) {
-            //pausamos
-            audioRef.current.pause()
-            setPlayingId(null)
+            audioRef.current.pause();
+            setPlayingId(null);
         } else {
-            //da clik a un nuevo disco
-            audioRef.current.src = vinilo.audioSrc
-            audioRef.current.play()
-            setPlayingId(vinilo.id)
+            audioRef.current.src = vinilo.audioSrc;
+            audioRef.current.play();
+            setPlayingId(vinilo.id);
         }
     }
 
     return (
-        <div className="w-full">
+        <div className="w-full py-12">
             {/* Reproductor invisible */}
             <audio ref={audioRef} onEnded={() => setPlayingId(null)} />
             
-            {/* Cuadricula */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+            {/* Cuadrícula de Discos */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-16 max-w-6xl mx-auto px-6">
                 {vinilosData.map((vinilo) => {
                     const isPlaying = playingId === vinilo.id;
                     
@@ -70,59 +63,83 @@ export default function VinlyShowCase() {
                             className="flex flex-col items-center cursor-pointer group"
                             onClick={() => togglePlay(vinilo)}
                         >
-                            {/* CAJA PRINCIPAL RELATIVA */}
-                            <div className="relative w-64 h-64 mb-6 flex justify-center items-center">
+                            {/* CONTENEDOR DEL DISCO */}
+                            <div className="relative w-64 h-64 mb-8 flex justify-center items-center">
                                 
-                                {/* 1. EL VINILO (Gira y sale) */}
+                                {/* 1. EL VINILO NEGRO (Gira con Glow Neón) */}
                                 <div
-                                    className={`absolute w-56 h-56 flex items-center justify-center transition-all duration-700 ease-in-out ${
-                                        isPlaying ? 'translate-x-16 animate-[spin_3s_linear_infinite]' : 'translate-x-0'
+                                    className={`absolute w-60 h-60 flex items-center justify-center transition-all duration-700 ease-in-out ${
+                                        isPlaying 
+                                        ? 'translate-x-20 animate-[spin_4s_linear_infinite] drop-shadow-[0_0_25px_rgba(6,182,212,0.5)]' 
+                                        : 'translate-x-0 opacity-40 group-hover:translate-x-10 group-hover:opacity-100'
                                     }`}
                                 >
-                                    {/* El disco negro base */}
-                                    <img
-                                        src="/images/vinilo-base2.png"
-                                        alt="Disco de Vinilo"
-                                        className="absolute w-full h-full object-contain drop-shadow-xl"
-                                    />
-                                    {/* Galleta */}
+                                    {/* Disco base con texturizado circular */}
+                                    <div className="absolute w-full h-full bg-[#111] rounded-full border-[6px] border-[#1a1a1a] shadow-2xl flex items-center justify-center">
+                                        <div className="absolute inset-0 rounded-full" 
+                                             style={{ backgroundImage: 'repeating-radial-gradient(circle, #222 0%, #111 2%)', opacity: 0.3 }}>
+                                        </div>
+                                    </div>
+
+                                    {/* Galleta Central (Portada pequeña) */}
                                     <img
                                         src={vinilo.portada}
                                         alt="Galleta central"
-                                        className="absolute w-20 h-20 rounded-full object-cover z-10 opacity-95"
+                                        className="absolute w-24 h-24 rounded-full object-cover z-10 border-2 border-[#111]"
                                     />
-                                    {/* Hoyito */}
-                                    <div className="absolute w-2 h-2 bg-zinc-900 rounded-full z-20"></div>
-                                </div> {/* <--- CORREGIDO: Aquí debía cerrarse el vinilo, antes estaba abajo */}
+                                    {/* Hoyito central */}
+                                    <div className="absolute w-3 h-3 bg-[#050508] rounded-full z-20 shadow-inner"></div>
+                                </div>
 
-                                {/* 2. LA PORTADA (Se mueve a la izquierda) */}
+                                {/* 2. LA FUNDA / PORTADA */}
                                 <div
-                                    className={`absolute w-64 h-64 z-30 shadow-2xl transition-transform duration-700 ease-in-out ${
-                                        isPlaying ? '-translate-x-8 scale-105' : 'translate-x-0 group-hover:scale-105'
+                                    className={`absolute w-64 h-64 z-30 transition-all duration-700 ease-in-out ${
+                                        isPlaying 
+                                        ? '-translate-x-12 scale-105 shadow-[0_0_30px_rgba(0,0,0,0.8)]' 
+                                        : 'translate-x-0 group-hover:scale-105 shadow-xl'
                                     }`}
                                 >
-                                    <img
-                                        src={vinilo.portada}
-                                        alt={vinilo.album}
-                                        className="w-full h-full object-cover rounded-sm border border-zinc-800"
-                                    />
-                                    {!isPlaying && (
-                                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <div className="w-14 h-14 rounded-full bg-orange-500 flex items-center justify-center text-white pl-1 shadow-lg backdrop-blur-md">
-                                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                                    <div className="relative w-full h-full p-1 bg-linear-to-br from-gray-700 to-gray-900 rounded-sm">
+                                        <img
+                                            src={vinilo.portada}
+                                            alt={vinilo.album}
+                                            className="w-full h-full object-cover rounded-sm grayscale-[0.2] group-hover:grayscale-0 transition-all"
+                                        />
+                                        {/* Overlay de reproducción */}
+                                        {!isPlaying && (
+                                            <div className="absolute inset-0 bg-cyan-500/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]">
+                                                <div className="w-16 h-16 rounded-full bg-black/80 border-2 border-cyan-400 flex items-center justify-center text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.6)]">
+                                                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        )}
+                                        {/* Indicador de "Playing" Neón */}
+                                        {isPlaying && (
+                                            <div className="absolute top-2 right-2 flex gap-1">
+                                                <div className="w-1 h-3 bg-cyan-400 animate-bounce"></div>
+                                                <div className="w-1 h-3 bg-cyan-400 animate-[bounce_1.2s_infinite]"></div>
+                                                <div className="w-1 h-3 bg-cyan-400 animate-[bounce_0.8s_infinite]"></div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* 3. INFO PRODUCTO */}
-                            <div className="text-center mt-4 z-10 transition-transform duration-300">
-                                <h4 className={`text-xl font-black mb-1 transition-colors ${isPlaying ? 'text-orange-500' : 'text-zinc-900'}`}>
+                            {/* 3. INFO DEL PRODUCTO (LETRAS CORREGIDAS) */}
+                            <div className="text-center relative z-40">
+                                <h4 className={`text-2xl font-black tracking-tighter uppercase transition-all duration-300 ${
+                                    isPlaying ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]' : 'text-white'
+                                }`}>
                                     {vinilo.album}
                                 </h4>
-                                <p className="text-zinc-500 font-medium mb-2">{vinilo.artista}</p>
-                                <span className="text-lg font-bold text-zinc-900">${vinilo.precio.toFixed(2)}</span>
+                                <p className="text-fuchsia-500 font-mono text-xs uppercase tracking-[0.3em] mt-1 mb-3">
+                                    {vinilo.artista}
+                                </p>
+                                <div className="inline-block px-4 py-1 border border-cyan-500/30 rounded-full bg-cyan-500/5">
+                                    <span className="text-lg font-bold text-gray-400 font-mono">
+                                        PRICE: <span className="text-white">${vinilo.precio.toFixed(2)}</span>
+                                    </span>
+                                </div>
                             </div>
                             
                         </div>
@@ -131,6 +148,4 @@ export default function VinlyShowCase() {
             </div>
         </div>
     );
-       
-
 }
