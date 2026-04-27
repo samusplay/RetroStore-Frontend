@@ -1,14 +1,13 @@
 // app/layout.tsx
 
 import { Inter } from 'next/font/google';
-// 1. NUEVA SINTAXIS: Importamos Link de Next.js
 import Link from 'next/link';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'RetroStore | Elegancia Clásica',
+  title: 'RetroStore | Cyberpunk & Classics',
   description: 'Catálogo premium de consolas, vinilos y moda de colección.',
 };
 
@@ -19,15 +18,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className={`${inter.className} bg-white text-zinc-900 min-h-screen flex flex-col antialiased`}>
+      {/* Fondo oscuro absoluto para toda la web */}
+      <body className={`${inter.className} bg-[#050508] text-gray-200 min-h-screen flex flex-col antialiased selection:bg-fuchsia-500 selection:text-white`}>
         
-        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-zinc-100">
+        {/* HEADER: Glassmorphism oscuro con borde de neón */}
+        <header className="sticky top-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-md border-b border-cyan-500/30 shadow-[0_4px_30px_rgba(6,182,212,0.15)]">
           <div className="container mx-auto px-6 h-20 flex items-center justify-between">
             
-            {/* 2. EL LOGO CON EL CASETE RETRO */}
+            {/* EL LOGO RETRO NEÓN */}
             <Link href="/" className="flex items-center gap-3 group">
-              {/* Ícono SVG de Casete en Naranja Retro */}
-              <div className="bg-orange-500 text-white p-1.5 rounded-md shadow-sm group-hover:scale-105 transition-transform">
+              {/* Ícono SVG brillando */}
+              <div className="bg-fuchsia-600 text-white p-1.5 rounded-md shadow-[0_0_15px_rgba(217,70,239,0.8)] group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(217,70,239,1)] transition-all duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect width="20" height="16" x="2" y="4" rx="2"/>
                   <circle cx="8" cy="12" r="2"/>
@@ -35,36 +36,38 @@ export default function RootLayout({
                   <path d="M11 12h2"/>
                 </svg>
               </div>
-              <div className="text-2xl font-black tracking-tight flex items-center gap-1">
-                <span className="text-zinc-900">RETRO</span>
-                <span className="text-zinc-400 font-light">STORE</span>
+              <div className="text-2xl font-black tracking-widest flex items-center gap-1">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">RETRO</span>
+                <span className="text-fuchsia-500 font-light drop-shadow-[0_0_5px_rgba(217,70,239,0.5)]">STORE</span>
               </div>
             </Link>
 
-            {/* 3. NAVEGACIÓN CON HOVER RETRO */}
-            <nav className="hidden md:flex gap-10 font-medium text-sm text-zinc-500">
-              {/* Usamos Link en lugar de la etiqueta <a> */}
-              <Link href="/" className="hover:text-orange-500 transition-colors">Inicio</Link>
-              <Link href="/catalogo" className="hover:text-orange-500 transition-colors">Catálogo</Link>
-              <Link href="#" className="hover:text-orange-500 transition-colors">Nosotros</Link>
+            {/* NAVEGACIÓN CYBERPUNK */}
+            <nav className="hidden md:flex gap-10 font-medium text-sm text-gray-400">
+              <Link href="/" className="hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all">Inicio</Link>
+              <Link href="/catalogo" className="hover:text-fuchsia-400 hover:drop-shadow-[0_0_8px_rgba(217,70,239,0.8)] transition-all">Catálogo</Link>
+              <Link href="catalogo/retro-tv" className="hover:text-purple-400 hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span> Habitación
+              </Link>
             </nav>
 
-            {/* BOTÓN ELEGANTE (Negro puro con un sutil brillo naranja al pasar el mouse) */}
-            <button className="bg-zinc-900 hover:bg-orange-500 text-white px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 shadow-md">
+            {/* BOTÓN NEÓN */}
+            <button className="bg-transparent border-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black hover:shadow-[0_0_20px_rgba(6,182,212,0.8)] px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300">
               Mi Colección
             </button>
           </div>
         </header>
 
-        <main className="flex-1">
+        <main className="flex-1 relative z-10">
           {children}
         </main>
 
-        <footer className="border-t border-zinc-100 py-12 mt-20">
-          <div className="container mx-auto px-6 text-center text-zinc-400 text-sm flex flex-col items-center">
-            {/* Un pequeño acento de color en el footer */}
-            <div className="w-12 h-1 bg-orange-500 rounded-full mb-6 opacity-50"></div>
-            <p>© 2026 RetroStore. Diseño y nostalgia.</p>
+        {/* FOOTER RETRO */}
+        <footer className="border-t border-fuchsia-900/30 bg-[#050508] py-12 mt-20 relative z-10">
+          <div className="container mx-auto px-6 text-center text-gray-600 text-sm flex flex-col items-center">
+            {/* Acento de luz en el footer */}
+            <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 rounded-full mb-6 shadow-[0_0_10px_rgba(217,70,239,0.5)]"></div>
+            <p>© 2026 RetroStore. Diseñado en el futuro, inspirado en el pasado.</p>
           </div>
         </footer>
 
