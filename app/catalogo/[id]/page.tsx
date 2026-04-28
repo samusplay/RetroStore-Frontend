@@ -4,9 +4,19 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useProductDetailStore } from '@/app/lib/useProductDetailStore';
-import { AlertTriangle, ArrowLeft, Gamepad, Info, Loader2, ShieldCheck, Terminal } from 'lucide-react';
+import {
+    AlertTriangle,
+    ArrowLeft,
+    Gamepad,
+    Info,
+    Loader2,
+    ShieldCheck,
+    Terminal
+} from 'lucide-react';
 import Link from 'next/link';
 import { getProductByIdAction } from '../actions/productIdActions';
+// Importamos el nuevo componente
+import VinylPlayer from '../components/VinylPlayer';
 
 export default function ProductDetailPage() {
     const params = useParams();
@@ -24,7 +34,7 @@ export default function ProductDetailPage() {
 
     const [error, setError] = useState<string | null>(null);
 
-    // Ejecutamos la petición al montar el componente (Criterio 6 y 7)
+    // Ejecutamos la petición al montar el componente
     useEffect(() => {
         const fetchProductDetail = async () => {
             if (!id) return;
@@ -62,13 +72,13 @@ export default function ProductDetailPage() {
     if (error || !selectedProduct) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center bg-[#050508] p-6">
-                <div className="border-2 border-dashed border-red-500/50 p-12 rounded-[2rem] text-center bg-red-900/10 max-w-lg shadow-[0_0_30px_rgba(239,68,68,0.2)]">
+                <div className="border-2 border-dashed border-red-500/50 p-12 rounded-[2rem] text-center bg-red-900/10 max-w-lg shadow-[0_0_30_rgba(239,68,68,0.2)]">
                     <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-6" />
                     <h2 className="text-white text-2xl font-black uppercase mb-2">Archivo Corrupto</h2>
                     <p className="text-red-400 font-mono text-xs uppercase mb-8">{error || "Producto no encontrado."}</p>
                     <button
                         onClick={() => router.push('/catalogo')}
-                        className="text-sm font-bold text-black bg-cyan-500 px-8 py-3 rounded-full hover:bg-white hover:shadow-[0_0_20px_rgba(6,182,212,0.8)] transition-all"
+                        className="text-sm font-bold text-black bg-cyan-500 px-8 py-3 rounded-full hover:bg-white hover:shadow-[0_0_20_rgba(6,182,212,0.8)] transition-all"
                     >
                         VOLVER A LA BASE
                     </button>
@@ -95,34 +105,37 @@ export default function ProductDetailPage() {
                 </Link>
 
                 {/* CONTENEDOR GRID: IMAGEN IZQ - DATOS DER */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 **items-center**">
 
-                    {/* COLUMNA IZQUIERDA: IMAGEN (Criterio 9) */}
+                    {/* COLUMNA IZQUIERDA: DINÁMICA (Renderizado Condicional) */}
                     <div className="relative group w-full flex flex-col justify-center">
-                        {/* Sombra exterior más sutil para un contenedor más pequeño */}
-                        <div className="absolute -inset-1 bg-linear-to-r from-cyan-500 to-fuchsia-500 rounded-3xl blur-lg opacity-15 group-hover:opacity-30 transition duration-1000"></div>
-
-                        {/* Contenedor principal de la imagen: MUCHO MÁS COMPACTO */}
-                        <div className="relative w-full h-62.5 md:h-87.5 bg-[#050508]/80 rounded-3xl border border-cyan-500/20 overflow-hidden flex items-center justify-center p-6 md:p-8 backdrop-blur-md shadow-[inset_0_0_40px_rgba(0,0,0,0.7)]">
-
-                            {/* Efecto de Scanlines de CRT */}
-                            <div className="absolute inset-0 pointer-events-none opacity-[0.1]" style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0) 50%, rgba(255,255,255,0.1) 50%)', backgroundSize: '100% 4px' }}></div>
-
-                            {/* Luz volumétrica detrás del cartucho: Más pequeña y centrada */}
-                            <div className="absolute w-1/2 h-1/2 bg-cyan-500/10 blur-[60px] rounded-full group-hover:bg-fuchsia-500/10 transition-colors duration-1000 z-0"></div>
-
-                            {/* La Imagen del Producto: Llena más el contenedor */}
-                            <img
-                                src={selectedProduct.imageUrl}
-                                alt={selectedProduct.name}
-                                className="relative z-10 max-h-full max-w-full object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)] group-hover:scale-[1.2] group-hover:-translate-y-1 transition-all duration-700 ease-out"
+                        
+                        {selectedProduct.category === 'VINILO' ? (
+                            /* MODO DISCO: Si es un vinilo, usamos el reproductor interactivo */
+                            <VinylPlayer 
+                                productName={selectedProduct.name}
+                                imageUrl={selectedProduct.imageUrl}
+                                youtubeUrl={selectedProduct.youtubeUrl}
                             />
+                        ) : (
+                            /* MODO ESTÁTICO: Para videojuegos y ropa */
+                            <>
+                                <div className="absolute -inset-1 bg-linear-to-r from-cyan-500 to-fuchsia-500 rounded-3xl blur-lg opacity-15 group-hover:opacity-30 transition duration-1000"></div>
 
-                            {/* Etiqueta de validación: Ajustada al contenedor más pequeño */}
-                            <div className="absolute top-3 right-3 bg-black/90 border border-cyan-500/40 px-2.5 py-1.5 rounded-md text-cyan-400 font-mono text-[9px] flex items-center gap-1.5 shadow-[0_0_10px_rgba(6,182,212,0.2)] backdrop-blur-md z-20">
-                                <ShieldCheck className="w-3 h-3 text-fuchsia-500" /> Validated
-                            </div>
-                        </div>
+                                <div className="relative w-full h-62.5 md:h-87.5 bg-[#050508]/80 rounded-3xl border border-cyan-500/20 overflow-hidden flex items-center justify-center p-6 md:p-8 backdrop-blur-md shadow-[inset_0_0_40px_rgba(0,0,0,0.7)]">
+                                    <div className="absolute inset-0 pointer-events-none opacity-[0.1]" style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0) 50%, rgba(255,255,255,0.1) 50%)', backgroundSize: '100% 4px' }}></div>
+                                    <div className="absolute w-1/2 h-1/2 bg-cyan-500/10 blur-[60px] rounded-full group-hover:bg-fuchsia-500/10 transition-colors duration-1000 z-0"></div>
+                                    <img
+                                        src={selectedProduct.imageUrl}
+                                        alt={selectedProduct.name}
+                                        className="relative z-10 max-h-full max-w-full object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)] group-hover:scale-[1.2] group-hover:-translate-y-1 transition-all duration-700 ease-out"
+                                    />
+                                    <div className="absolute top-3 right-3 bg-black/90 border border-cyan-500/40 px-2.5 py-1.5 rounded-md text-cyan-400 font-mono text-[9px] flex items-center gap-1.5 shadow-[0_0_10px_rgba(6,182,212,0.2)] backdrop-blur-md z-20">
+                                        <ShieldCheck className="w-3 h-3 text-fuchsia-500" /> Validated
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
 
                     {/* COLUMNA DERECHA: INFO Y COMPRA */}
@@ -132,7 +145,7 @@ export default function ProductDetailPage() {
                             <span className="inline-block border border-fuchsia-500/50 text-fuchsia-400 bg-fuchsia-500/10 px-3 py-1 rounded-full font-mono text-[10px] uppercase tracking-widest mb-4">
                                 Condición: {selectedProduct.condition}
                             </span>
-                            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-white to-fuchsia-500 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+                            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-white to-fuchsia-500 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
                                 {selectedProduct.name}
                             </h1>
                         </div>
@@ -160,15 +173,15 @@ export default function ProductDetailPage() {
                         </div>
 
                         {/* ZONA DE COMPRA Y PRECIO */}
-                        <div className="flex flex-col md:flex-row items-center gap-6 mt-auto p-6 bg-cyan-950/20 rounded-2xl border border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.1)]">
+                        <div className="flex flex-col md:flex-row items-center gap-6 mt-auto p-6 bg-cyan-950/20 rounded-2xl border border-cyan-500/30 shadow-[0_0_30_rgba(6,182,212,0.1)]">
                             <div className="flex-1 w-full text-center md:text-left">
                                 <p className="font-mono text-[10px] text-cyan-500 uppercase tracking-widest mb-1">Valor de Transacción</p>
-                                <p className="text-5xl font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+                                <p className="text-5xl font-black text-white drop-shadow-[0_0_15_rgba(255,255,255,0.4)]">
                                     ${selectedProduct.price}
                                 </p>
                             </div>
 
-                            <button className="w-full md:w-auto bg-fuchsia-600 hover:bg-fuchsia-500 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-[0_0_20px_rgba(217,70,239,0.5)] hover:scale-105 active:scale-95">
+                            <button className="w-full md:w-auto bg-fuchsia-600 hover:bg-fuchsia-500 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-[0_0_20_rgba(217,70,239,0.5)] hover:scale-105 active:scale-95">
                                 <Terminal className="w-5 h-5" />
                                 Adquirir
                             </button>
