@@ -20,3 +20,5 @@ export const useRetroStore = create<RetroStore>((set) => ({
   setIsDragging: (dragging) => set({ isDragging: dragging }),
   setCategoryFilter: (category) => set({ categoryFilter: category }),
 }));
+
+
