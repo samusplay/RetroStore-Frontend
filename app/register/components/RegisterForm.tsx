@@ -9,6 +9,7 @@ import Swal from "sweetalert2"; // <-- Importamos SweetAlert
 import { registerAction } from "../actions/register.action";
 import { registerSchema, type RegisterInput } from "../schemas/register.schema";
 
+//subiendo cambios
 const CONSOLES = [
   {
     id: "Super Nintendo",
