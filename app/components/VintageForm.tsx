@@ -1,3 +1,4 @@
+'use client';
 import { useState } from "react";
 
 if (typeof document !== "undefined") {
@@ -80,30 +81,26 @@ export default function VintageForm() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-8"
+      className="w-full py-16 flex items-center justify-center px-4"
       style={{
-        background: `
-          radial-gradient(ellipse at 20% 20%, #E8D5A3 0%, transparent 50%),
-          radial-gradient(ellipse at 80% 80%, #D4B896 0%, transparent 50%),
-          #F0DDB8
-        `,
+        
         ...cormorant,
       }}
     >
       <div
-        className="relative text-center w-full max-w-[440px]"
+        className="relative text-center w-full max-w-3xl"
         style={{
           background: "#FDF6E3",
-          padding: "2.5rem 2.8rem",
+          padding: "4rem 5rem",
           border: "1.5px solid #C4A882",
           boxShadow: "0 2px 8px rgba(44,24,16,0.15), inset 0 0 60px rgba(196,160,85,0.08)",
         }}
       >
         {/* Esquinas */}
-        <div className="absolute top-[10px] left-[10px]  w-7 h-7 border-t-2 border-l-2 border-[#C4A055]" />
-        <div className="absolute top-[10px] right-[10px] w-7 h-7 border-t-2 border-r-2 border-[#C4A055]" />
-        <div className="absolute bottom-[10px] left-[10px]  w-7 h-7 border-b-2 border-l-2 border-[#C4A055]" />
-        <div className="absolute bottom-[10px] right-[10px] w-7 h-7 border-b-2 border-r-2 border-[#C4A055]" />
+        <div className="absolute top-2.5 left-2.5 w-7 h-7 border-t-2 border-l-2 border-[#C4A055]" />
+        <div className="absolute top-2.5 right-2.5 w-7 h-7 border-t-2 border-r-2 border-[#C4A055]" />
+        <div className="absolute bottom-2.5 left-2.5 w-7 h-7 border-b-2 border-l-2 border-[#C4A055]" />
+        <div className="absolute bottom-2.5 right-2.5 w-7 h-7 border-b-2 border-r-2 border-[#C4A055]" />
 
         {/* Encabezado */}
         <p className="text-[0.75rem] tracking-[0.25em] uppercase text-[#C4A055] mb-2" style={cormorant}>
@@ -158,7 +155,7 @@ export default function VintageForm() {
           </form>
         )}
 
-        <p className="mt-[1.4rem] text-[0.8rem] italic leading-[1.5] text-[#8C6D52]" style={cormorant}>
+        <p className="mt-6 text-xs italic leading-relaxed text-[#8C6D52]"style={cormorant}>
           Sin spam. Solo lo más selecto de nuestra colección.
         </p>
       </div>
