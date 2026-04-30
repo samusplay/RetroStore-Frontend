@@ -1,7 +1,12 @@
+import { LoginForm } from "./components/LoginForm";
 
-export default function LoginPage() {
-    return(<>
-    <p>Aqui Programar acceder desde localhost:3000/login</p>
-    <p>Crear componente de formulario e inyectarloa aqui</p>
-    </>)
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  // Atrapamos el email de la URL si existe
+  const defaultEmail = typeof searchParams?.email === 'string' ? searchParams.email : '';
+
+  return <LoginForm defaultEmail={defaultEmail} />;
 }
