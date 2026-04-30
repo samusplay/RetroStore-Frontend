@@ -1,12 +1,17 @@
 import { LoginForm } from "./components/LoginForm";
 
-export default function LoginPage({
+// 1. Convertimos la página en una función asíncrona
+export default async function LoginPage({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  // Atrapamos el email de la URL si existe
-  const defaultEmail = typeof searchParams?.email === 'string' ? searchParams.email : '';
+  
+  // 2. Esperamos (await) a que los parámetros de búsqueda se resuelvan
+  const params = await searchParams;
+
+  // 3. Ahora sí podemos acceder a 'email' de forma segura
+  const defaultEmail = typeof params.email === 'string' ? params.email : '';
 
   return <LoginForm defaultEmail={defaultEmail} />;
 }

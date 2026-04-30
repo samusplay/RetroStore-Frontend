@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
+// 1. Importamos el store de Zustand
+
+import { useAuthStore } from "@/app/lib/useAuthStore";
 import { loginAction } from "../actions/login.action";
 import { loginSchema, type LoginInput } from "../schemas/login.schema";
 
@@ -15,6 +18,9 @@ interface LoginFormProps {
 export function LoginForm({ defaultEmail }: LoginFormProps) {
   const router = useRouter();
   
+  // 2. Extraemos la función login de nuestro store
+  const { login } = useAuthStore();
+  
   const {
     register,
     handleSubmit,
@@ -22,7 +28,7 @@ export function LoginForm({ defaultEmail }: LoginFormProps) {
   } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: defaultEmail || "", // ¡Aquí se autocompleta mágicamente!
+      email: defaultEmail || "",
       password: "",
     },
   });
@@ -31,21 +37,22 @@ export function LoginForm({ defaultEmail }: LoginFormProps) {
     const toastId = toast.loading("Verificando credenciales en la base de datos...");
     
     try {
-      // 1. Ejecutamos la acción que usa tu apiClient
       const response = await loginAction(data);
       
-      // 2. Guardamos el token donde tu apiClient espera encontrarlo
-      if (response.accessToken) {
+      // 3. Verificamos que tengamos token Y usuario antes de proceder
+      if (response.accessToken && response.user) {
+        // A. Guardamos el token en localStorage para el apiClient (como ya hacías)
         localStorage.setItem("accessToken", response.accessToken);
         
-        // Si tienes Zustand, aquí también llamarías a tu store:
-        // useAuthStore.getState().setAuth(response.user, response.accessToken);
-      }
+        // B. ¡AQUÍ ESTÁ LA MAGIA! Actualizamos Zustand con ambos datos
+        // Esto hará que tu Header se actualice instantáneamente
+        login(response.accessToken, response.user);
 
-      toast.success("¡Acceso concedido! Iniciando sistema...", { id: toastId });
-      
-      // 3. Redirigimos al catálogo o dashboard
-      router.push("/catalogo"); // Cambia la ruta a donde quieras llevarlos
+        toast.success(`¡Bienvenido, ${response.user.username}!`, { id: toastId });
+        
+        // 4. Redirigimos al catálogo
+        router.push("/catalogo"); 
+      }
 
     } catch (err: any) {
       toast.error(err.message || "Credenciales incorrectas", { id: toastId });
@@ -55,7 +62,6 @@ export function LoginForm({ defaultEmail }: LoginFormProps) {
   return (
     <div className="w-full max-w-[28rem] rounded-2xl border border-cyan-400/40 bg-black/40 p-8 shadow-[0_0_40px_rgba(34,211,238,0.2)] backdrop-blur-xl relative overflow-hidden">
       
-      {/* Resplandor decorativo interno */}
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/20 blur-[50px] rounded-full pointer-events-none"></div>
       <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-500/20 blur-[50px] rounded-full pointer-events-none"></div>
 

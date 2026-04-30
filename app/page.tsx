@@ -3,10 +3,9 @@ import BrandCarrusel from "./components/BrandCarrusel";
 import Gallery from "./components/Gallery";
 import VinlyShowCase from "./components/VinlyShowCase";
 import VintageForm from "./components/VintageForm";
-import { verifcationTest } from "./config/cloudinary";
 
 export default async function Home() {
-  await verifcationTest();
+  
   return (
     <div className="flex flex-col w-full bg-[#050508] overflow-hidden">
       
