@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { getProductByIdAction } from '../actions/productIdActions';
+import Rockola from '../components/Rockola';
 import VinylPlayer from '../components/VinylPlayer';
 
 export default function ProductDetailPage() {
@@ -39,7 +40,6 @@ export default function ProductDetailPage() {
         const fetchProductDetail = async () => {
             const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-            // Si no es UUID válido redirigimos al catálogo directamente
             if (!id || !uuidRegex.test(id)) {
                 router.push('/catalogo');
                 return;
@@ -90,10 +90,11 @@ export default function ProductDetailPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#050508] text-white p-6 md:p-12 font-sans relative">
+        <div className="min-h-screen bg-[#050508] text-white font-sans relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-125 bg-cyan-900/20 blur-[150px] pointer-events-none z-0"></div>
 
-            <div className="max-w-6xl mx-auto relative z-10">
+            {/* ── Contenido principal acotado ── */}
+            <div className="max-w-6xl mx-auto relative z-10 px-6 md:px-12 pt-6 md:pt-12">
 
                 <Link
                     href="/catalogo"
@@ -196,6 +197,17 @@ export default function ProductDetailPage() {
                     </div>
                 </div>
             </div>
+
+            {/* 🚀 ROCKOLA — full width, fuera del max-w-6xl 🚀 */}
+            {selectedProduct.category === 'VINILO' && (
+                <div className="w-full px-6 md:px-12 pb-12 mt-8 relative z-10">
+                    <Rockola
+                        albumName={selectedProduct.name}
+                        imageUrl={selectedProduct.imageUrl}
+                        youtubeUrl={selectedProduct.youtubeUrl}
+                    />
+                </div>
+            )}
         </div>
     );
 }
