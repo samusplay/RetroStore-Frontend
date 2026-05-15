@@ -32,12 +32,19 @@ export default function ProductDetailPage() {
         clearProductDetail
     } = useProductDetailStore();
 
-    const { user } = useAuthStore(); // 👈
+    const { user } = useAuthStore();
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchProductDetail = async () => {
-            if (!id) return;
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+            // Si no es UUID válido redirigimos al catálogo directamente
+            if (!id || !uuidRegex.test(id)) {
+                router.push('/catalogo');
+                return;
+            }
+
             try {
                 setIsLoadingDetail(true);
                 const data = await getProductByIdAction(id);
@@ -51,7 +58,7 @@ export default function ProductDetailPage() {
 
         fetchProductDetail();
         return () => clearProductDetail();
-    }, [id, setSelectedProduct, setIsLoadingDetail, clearProductDetail]);
+    }, [id, setSelectedProduct, setIsLoadingDetail, clearProductDetail, router]);
 
     if (isLoadingDetail) {
         return (
@@ -67,7 +74,7 @@ export default function ProductDetailPage() {
     if (error || !selectedProduct) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center bg-[#050508] p-6">
-                <div className="border-2 border-dashed border-red-500/50 p-12 rounded-4xl text-center bg-red-900/10 max-w-lg shadow-[0_0_30_rgba(239,68,68,0.2)]">
+                <div className="border-2 border-dashed border-red-500/50 p-12 rounded-4xl text-center bg-red-900/10 max-w-lg">
                     <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-6" />
                     <h2 className="text-white text-2xl font-black uppercase mb-2">Archivo Corrupto</h2>
                     <p className="text-red-400 font-mono text-xs uppercase mb-8">{error || "Producto no encontrado."}</p>
@@ -158,7 +165,7 @@ export default function ProductDetailPage() {
                             </div>
                         </div>
 
-                        {/* ── ZONA DE COMPRA ── */}
+                        {/* ZONA DE COMPRA */}
                         <div className="flex flex-col md:flex-row items-center gap-6 mt-auto p-6 bg-cyan-950/20 rounded-2xl border border-cyan-500/30">
                             <div className="flex-1 w-full text-center md:text-left">
                                 <p className="font-mono text-[10px] text-cyan-500 uppercase tracking-widest mb-1">Valor de Transacción</p>
@@ -167,17 +174,13 @@ export default function ProductDetailPage() {
                                 </p>
                             </div>
 
-                            {/* Botones alineados juntos */}
                             <div className="flex items-center gap-3 w-full md:w-auto">
-                                
-                                {/* 👇 Solo si hay usuario logueado, cualquier rol */}
                                 {user && (
                                     <Collection
                                         productId={selectedProduct.id}
                                         productName={selectedProduct.name}
                                     />
                                 )}
-
                                 <button className="flex-1 md:flex-none bg-fuchsia-600 hover:bg-fuchsia-500 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-[0_0_20px_rgba(217,70,239,0.5)] hover:scale-105 active:scale-95">
                                     <Terminal className="w-5 h-5" />
                                     Adquirir

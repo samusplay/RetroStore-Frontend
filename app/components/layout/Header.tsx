@@ -53,17 +53,34 @@ export default function Header() {
             >
               Catálogo
             </Link>
+
             {isSeller && (
-              <Link
-                href="/perfil"
-                className={`transition-all hover:text-orange-400 hover:drop-shadow-[0_0_8px_rgba(249,115,22,0.8)] font-bold flex items-center gap-2 ${pathname === '/perfil' ? 'text-orange-400 drop-shadow-[0_0_8px_rgba(249,115,22,0.8)]' : ''}`}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 5v14M5 12h14"/>
-                </svg>
-                Publicar
-              </Link>
+              <>
+                <Link
+                  href="/perfil"
+                  className={`transition-all hover:text-orange-400 hover:drop-shadow-[0_0_8px_rgba(249,115,22,0.8)] font-bold flex items-center gap-2 ${pathname === '/perfil' ? 'text-orange-400 drop-shadow-[0_0_8px_rgba(249,115,22,0.8)]' : ''}`}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 5v14M5 12h14"/>
+                  </svg>
+                  Publicar
+                </Link>
+
+                <Link
+                  href="/perfil/dashboard"
+                  className={`transition-all hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] font-bold flex items-center gap-2 ${pathname === '/perfil/dashboard' ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]' : ''}`}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="7" height="9" x="3" y="3" rx="1"/>
+                    <rect width="7" height="5" x="14" y="3" rx="1"/>
+                    <rect width="7" height="9" x="14" y="12" rx="1"/>
+                    <rect width="7" height="5" x="3" y="16" rx="1"/>
+                  </svg>
+                  Dashboard
+                </Link>
+              </>
             )}
+
             <Link
               href="/catalogo/retro-tv"
               className={`hover:text-purple-400 hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all flex items-center gap-2 ${pathname.includes('retro-tv') ? 'text-purple-400' : ''}`}
@@ -80,7 +97,6 @@ export default function Header() {
             ) : user ? (
               <div className="flex items-center gap-4">
 
-                {/* Info usuario */}
                 <div className="flex flex-col items-end">
                   <span className="text-[10px] font-mono text-cyan-500 uppercase tracking-tighter">Conectado como</span>
                   <span className="text-sm font-bold text-white">{user.username}</span>
@@ -89,10 +105,8 @@ export default function Header() {
                   </span>
                 </div>
 
-                {/* Separador */}
                 <div className="w-px h-8 bg-white/10" />
 
-                {/* Botón Mi Colección */}
                 <button
                   onClick={() => setDrawerOpen(true)}
                   className="flex items-center gap-2 px-4 py-2 rounded-full border border-fuchsia-500/50 text-fuchsia-400 hover:bg-fuchsia-500/10 hover:shadow-[0_0_15px_rgba(217,70,239,0.3)] text-sm font-bold transition-all duration-300"
@@ -102,10 +116,8 @@ export default function Header() {
                   <span className="hidden sm:inline">Mi Colección</span>
                 </button>
 
-                {/* Separador */}
                 <div className="w-px h-8 bg-white/10" />
 
-                {/* Logout */}
                 <button
                   onClick={() => logout()}
                   className="p-2 rounded-full border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300"
