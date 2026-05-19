@@ -1,56 +1,41 @@
-﻿'use server';
+﻿import { apiClient } from '@/app/config/apiClient';
+import { createPaymentSchema, type CreatePaymentInput } from '../schemas/payment.schema';
 
-import { cookies } from 'next/headers';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
-
-function getToken(): string {
-  const cookieStore = cookies();
-  return cookieStore.get('token')?.value ?? '';
-}
-
-function authHeaders(): HeadersInit {
-  return {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${getToken()}`,
+export interface CreatePaymentResponse {
+  payment: {
+    id: string;
+    amount: number;
+    status: string;
+    method: string;
+    productIds: string[];
+    buyerId: string;
+    stripePaymentIntentId: string;
+    createdAt: string;
   };
+  clientSecret: string;
 }
 
-export async function createPayment(data: {
-  amount: number;
-  method: 'card' | 'transfer';
-  productId: string;
-}) {
-  const res = await fetch(`${API_URL}/payments`, {
+export async function createPayment(
+  data: CreatePaymentInput,
+): Promise<CreatePaymentResponse> {
+  const validated = createPaymentSchema.parse(data);
+  return await apiClient<CreatePaymentResponse>('/payments', {
     method: 'POST',
-    headers: authHeaders(),
-    body: JSON.stringify(data),
+    body: validated,
+    auth: true,
   });
-
-  if (!res.ok) {
-    const error = await res.json().catch(() => ({}));
-    throw new Error(error?.message ?? 'Error al crear el pago');
-  }
-
-  return res.json();
 }
 
-export async function getMyPayments() {
-  const res = await fetch(`${API_URL}/payments/my-payments`, {
-    headers: authHeaders(),
-    cache: 'no-store',
+export async function getMyPayments(): Promise<any[]> {
+  return await apiClient<any[]>('/payments/my-payments', {
+    method: 'GET',
+    auth: true,
   });
-
-  if (!res.ok) throw new Error('Error al obtener tus pagos');
-  return res.json();
 }
 
-export async function getPaymentStatus(id: string) {
-  const res = await fetch(`${API_URL}/payments/${id}`, {
-    headers: authHeaders(),
-    cache: 'no-store',
+export async function getPaymentStatus(id: string): Promise<any> {
+  return await apiClient<any>(`/payments/${id}`, {
+    method: 'GET',
+    auth: true,
   });
-
-  if (!res.ok) throw new Error('Pago no encontrado');
-  return res.json();
 }

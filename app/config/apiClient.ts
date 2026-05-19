@@ -16,8 +16,17 @@ export async function apiClient<T>(endpoint: string, options: FetchOptions = {})
 
   // Leemos el token del localStorage donde Zustand lo guardará
   const token = typeof window !== 'undefined'
-    ? localStorage.getItem('accessToken')
-    : null;
+  ? (() => {
+      try {
+        const raw = localStorage.getItem('retrostore-auth');
+        const parsed = raw ? JSON.parse(raw)?.state?.token : null;
+        console.log('🔑 Token en apiClient:', parsed ? 'ENCONTRADO' : 'NULL');
+        return parsed;
+      } catch {
+        return null;
+      }
+    })()
+  : null;
 
   const config: RequestInit = {
     method: options.method || 'GET',
