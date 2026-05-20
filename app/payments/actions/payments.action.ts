@@ -39,3 +39,22 @@ export async function getPaymentStatus(id: string): Promise<any> {
     auth: true,
   });
 }
+
+//funciones para manejrar la logica de venta del Vendedor
+export async function getAllPayments(): Promise<any[]> {
+  return await apiClient<any[]>('/payments', {
+    method: 'GET',
+    auth: true,
+  });
+}
+
+export async function updatePaymentStatus(
+  id: string,
+  status: 'completed' | 'failed' | 'pending',
+): Promise<any> {
+  return await apiClient<any>(`/payments/${id}/status`, {
+    method: 'PATCH',
+    body: { status },
+    auth: true,
+  });
+}

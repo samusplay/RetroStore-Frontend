@@ -52,6 +52,7 @@ export default function Header() {
               Catálogo
             </Link>
 
+            {/* SECCIÓN EXCLUSIVA PARA SELLERS */}
             {isSeller && (
               <>
                 <Link href="/perfil" className={`transition-all hover:text-orange-400 hover:drop-shadow-[0_0_8px_rgba(249,115,22,0.8)] font-bold flex items-center gap-2 ${pathname === "/perfil" ? "text-orange-400 drop-shadow-[0_0_8px_rgba(249,115,22,0.8)]" : ""}`}>
@@ -68,6 +69,14 @@ export default function Header() {
                     <rect width="7" height="5" x="3" y="16" rx="1" />
                   </svg>
                   Dashboard
+                </Link>
+                {/* 🛠️ NUEVO BOTÓN DE PAGOS PARA SELLERS */}
+                <Link href="/payments/seller-payments" className={`transition-all hover:text-green-400 hover:drop-shadow-[0_0_8px_rgba(0,255,136,0.8)] font-bold flex items-center gap-2 ${pathname === "/payments/seller-payments" ? "text-green-400 drop-shadow-[0_0_8px_rgba(0,255,136,0.8)]" : ""}`}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="20" height="14" x="2" y="5" rx="2"/>
+                    <line x1="2" x2="22" y1="10" y2="10"/>
+                  </svg>
+                  Pagos
                 </Link>
               </>
             )}
