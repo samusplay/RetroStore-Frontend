@@ -172,7 +172,7 @@ export default function ProductDetailPage() {
                                             }`}>
                                             {isInCart ? <><ShoppingCart className="w-4 h-4" /> En Carrito</>
                                             : addedToCart ? <><ShieldCheck className="w-4 h-4" /> Inyectado</>
-                                            : <><Terminal className="w-4 h-4" /> Extraer_Módulo</>}
+                                            : <><Terminal className="w-4 h-4" /> Agregar al Carrito</>}
                                         </button>
                                     ) : (
                                         <Link href="/login" className="w-full sm:w-auto bg-fuchsia-600 hover:bg-fuchsia-500 text-white px-8 py-4 rounded-sm font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all hover:-translate-y-1">
