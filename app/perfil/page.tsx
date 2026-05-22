@@ -1,5 +1,5 @@
 import { ProductForm } from "./components/ProductForm";
-
+//cambio commit
 // Metadata para SEO interno
 export const metadata = {
   title: "RetroStore | Gestionar Inventario",
